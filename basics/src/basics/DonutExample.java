@@ -1,0 +1,45 @@
+package basics;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+
+
+/**
+ * @author gj3
+ * 
+ *         following tutorial from
+ *         http://zetcode.com/tutorials/javagamestutorial/basics/
+ *
+ */
+public class DonutExample extends JFrame {
+
+	public DonutExample()
+	{
+		initUI();
+	}
+	
+	private void initUI()
+	{
+		add(new Board());
+		
+		setSize(800, 800);
+		
+		setTitle("Donut Example");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+	}
+	
+	public static void main(String[] args)
+	{
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run()
+			{
+				DonutExample ex = new DonutExample();
+				ex.setVisible(true);
+			}
+		});
+	}
+	
+}
