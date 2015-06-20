@@ -11,7 +11,6 @@ import java.awt.geom.Ellipse2D;
 
 import javax.swing.JPanel;
 
-
 /**
  * @author gj3
  * 
@@ -19,44 +18,49 @@ import javax.swing.JPanel;
  *         http://zetcode.com/tutorials/javagamestutorial/basics/
  *
  */
-public class Board extends JPanel {
+public class Board extends JPanel
+{
 
-	public Board() {
+    public Board()
+    {
 
-	}
+    }
 
-	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		drawDonut(g);
-	}
+    @Override
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+        drawDonut(g);
+    }
 
-	private void drawDonut(Graphics g) {
+    private void drawDonut(Graphics g)
+    {
 
-		Graphics2D g2d = (Graphics2D) g;
+        Graphics2D g2d = (Graphics2D) g;
 
-		RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
+        RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
 
-		rh.put(RenderingHints.KEY_RENDERING,
-				RenderingHints.VALUE_RENDER_QUALITY);
+        rh.put(RenderingHints.KEY_RENDERING,
+                RenderingHints.VALUE_RENDER_QUALITY);
 
-		g2d.setRenderingHints(rh);
+        g2d.setRenderingHints(rh);
 
-		Dimension size = getSize();
-		double w = size.getWidth();
-		double h = size.getHeight();
+        Dimension size = getSize();
+        double w = size.getWidth();
+        double h = size.getHeight();
 
-		Ellipse2D e = new Ellipse2D.Double(0, 0, 250, 250);
-		g2d.setStroke(new BasicStroke(1));
-		g2d.setColor(Color.gray);
+        Ellipse2D e = new Ellipse2D.Double(0, 0, 250, 250);
+        g2d.setStroke(new BasicStroke(1));
+        g2d.setColor(Color.gray);
 
-		for (double deg = 0; deg < 360; deg += 5) {
-			AffineTransform at = AffineTransform.getTranslateInstance(w / 2,
-					h / 2);
-			at.rotate(Math.toRadians(deg));
-			g2d.draw(at.createTransformedShape(e));
-		}
-	}
+        for (double deg = 0; deg < 360; deg += 5)
+        {
+            AffineTransform at = AffineTransform.getTranslateInstance(w / 2,
+                    h / 2);
+            at.rotate(Math.toRadians(deg));
+            g2d.draw(at.createTransformedShape(e));
+        }
+    }
 
 }

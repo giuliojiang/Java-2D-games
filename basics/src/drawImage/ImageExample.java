@@ -1,45 +1,36 @@
-package basics;
+package drawImage;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-/**
- * @author gj3
- * 
- *         following tutorial from
- *         http://zetcode.com/tutorials/javagamestutorial/basics/
- *
- */
-public class DonutExample extends JFrame
+public class ImageExample extends JFrame
 {
-
-    public DonutExample()
+    public ImageExample()
     {
         initUI();
     }
-
+    
     private void initUI()
     {
-        add(new Board());
-
-        setSize(800, 800);
-
-        setTitle("Donut Example");
+        add (new Board());
+        
+        pack();
+        
+        setTitle("Opel");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
-
+    
     public static void main(String[] args)
     {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run()
             {
-                DonutExample ex = new DonutExample();
+                ImageExample ex = new ImageExample();
                 ex.setVisible(true);
             }
         });
     }
-
 }

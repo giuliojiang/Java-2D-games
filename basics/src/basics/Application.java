@@ -11,34 +11,39 @@ import javax.swing.JFrame;
  *         http://zetcode.com/tutorials/javagamestutorial/basics/
  *
  */
-public class Application extends JFrame {
+public class Application extends JFrame
+{
 
-	public Application() {
-		initUI();
-	}
+    public Application()
+    {
+        initUI();
+    }
 
-	private void initUI() {
+    private void initUI()
+    {
 
-		add(new Board());
+        add(new Board());
 
-		setSize(250, 200);
+        setSize(250, 200);
 
-		setTitle("Application");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+        setTitle("Application");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
-	}
+    }
 
-	public static void main(String[] args) {
+    public static void main(String[] args)
+    {
 
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				Application ex = new Application();
-				ex.setVisible(true);
-			}
-		});
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run()
+            {
+                Application ex = new Application();
+                ex.setVisible(true);
+            }
+        });
 
-	}
+    }
 
 }
