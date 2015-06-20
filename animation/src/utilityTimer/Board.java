@@ -62,8 +62,9 @@ public class Board extends JPanel
     @Override
     public void paintComponent(Graphics g)
     {
-        super.paintComponent(g);
+        // super.paintComponent(g);
         drawStar(g);
+        
     }
     
     private void drawStar(Graphics g)
@@ -82,11 +83,12 @@ public class Board extends JPanel
             
             if (y > B_HEIGHT)
             {
+                getGraphics().fillRect(0, 0, getWidth(), getHeight());
                 y = INITIAL_Y;
                 x = INITIAL_X;
             }
             
-            repaint();
+            paint(getGraphics());
         }
     }
 
