@@ -1,5 +1,9 @@
 package snake;
 
+/**
+ * @author Giulio Jiang
+ * time scheduler thread
+ */
 public class TimerRunnable implements Runnable
 {
 
@@ -7,7 +11,7 @@ public class TimerRunnable implements Runnable
     private long next;
     private Board board;
     private long delay;
-    
+
     public TimerRunnable(Board board)
     {
         this.board = board;
@@ -15,19 +19,19 @@ public class TimerRunnable implements Runnable
         this.delay = 2;
         this.next = this.start + delay;
     }
-    
+
     @Override
     public void run()
     {
-    	start = System.currentTimeMillis();
-    	next = start + delay;
+        start = System.currentTimeMillis();
+        next = start + delay;
         while (true)
         {
-        	if (Thread.currentThread().isInterrupted())
-        	{
-        		return;
-        	}
-        	
+            if (Thread.currentThread().isInterrupted())
+            {
+                return;
+            }
+
             if (System.currentTimeMillis() > next)
             {
                 next += delay;
@@ -35,12 +39,10 @@ public class TimerRunnable implements Runnable
             }
         }
     }
-    
+
     public void setDelay(long delay)
     {
-    	this.delay = delay;
+        this.delay = delay;
     }
-    
-    
 
 }

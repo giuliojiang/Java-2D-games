@@ -2,6 +2,6 @@ package snake;
 
 public enum SnakeStatus {
 
-	ALIVE, DEAD, STARVATED;
-	
+    ALIVE, DEAD, STARVATED;
+
 }

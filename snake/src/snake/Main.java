@@ -4,7 +4,10 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-
+/**
+ * @author Giulio Jiang
+ * main launcher
+ */
 public class Main extends JFrame
 {
 
@@ -12,19 +15,19 @@ public class Main extends JFrame
     {
         initUI();
     }
-    
+
     public void initUI()
     {
         add(new Board());
-        
+
         setResizable(false);
         pack();
-        
+
         setTitle("SNAKE");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    
+
     public static void main(String[] args)
     {
         EventQueue.invokeLater(new Runnable()
@@ -36,8 +39,8 @@ public class Main extends JFrame
                 Main m = new Main();
                 m.setVisible(true);
             }
-            
+
         });
     }
-    
+
 }

@@ -1,10 +1,7 @@
 package snake;
 
-public enum CellType
-{
-    
-    EMPTY,
-    SNAKE,
-    APPLE
+public enum CellType {
+
+    EMPTY, SNAKE, APPLE
 
 }

@@ -4,6 +4,11 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
+/**
+ * @author Giulio Jiang
+ * Has references to images used for cells
+ * single-instance object
+ */
 public class CellImages
 {
 
@@ -28,7 +33,7 @@ public class CellImages
         // load apple image
         ii = new ImageIcon(getClass().getResource("/resource/apple.png"));
         this.appleImage = ii.getImage();
-        
+
         // load game over image
         ii = new ImageIcon(getClass().getResource("/resource/gameover.png"));
         this.gameOverImage = ii.getImage();
@@ -43,28 +48,28 @@ public class CellImages
 
         return instance;
     }
-    
+
     public Image getImage(CellType type)
     {
         if (type == CellType.EMPTY)
         {
             return emptyImage;
         }
-        
+
         if (type == CellType.SNAKE)
         {
             return snakeImage;
         }
-        
+
         if (type == CellType.APPLE)
         {
             return appleImage;
         }
-        
+
         // impossible
         return null;
     }
-    
+
     public Image getGameOver()
     {
         return gameOverImage;
