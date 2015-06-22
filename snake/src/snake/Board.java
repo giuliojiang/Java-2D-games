@@ -2,6 +2,7 @@ package snake;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +11,6 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 public class Board extends JPanel implements ActionListener {
 
@@ -124,6 +124,7 @@ public class Board extends JPanel implements ActionListener {
 			paintScore(g);
 			
 			if (!inGame) {
+				snake.drawFinalScreen(g);
 				g.drawImage(CellImages.getInstance().getGameOver(), 0, 0, this);
 			}
 		} else
@@ -135,6 +136,7 @@ public class Board extends JPanel implements ActionListener {
 	
 	private void paintScore(Graphics g)
 	{
+		g.setFont(new Font("Sans", Font.PLAIN, 13));
 		g.drawString("Score: " + snake.getScore(), 20, 20);
 	}
 

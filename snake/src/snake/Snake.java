@@ -1,5 +1,6 @@
 package snake;
 
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.Deque;
@@ -14,7 +15,7 @@ public class Snake
     private Direction newDirection;
     // queue to store snake points. add to the beginning, remove from the end
     private Deque<CellCoordinate> snake;
-    private boolean alive;
+    private SnakeStatus status;
     private boolean eatingApple;
     private Grid cells;
     private Board board;
@@ -30,7 +31,7 @@ public class Snake
     	this.direction = Direction.UP;
         this.newDirection = direction;
         this.snake = new LinkedList<CellCoordinate>();
-        this.alive = true;
+        this.status = SnakeStatus.ALIVE;
         this.eatingApple = false;
         this.cells = cells;
         this.board = board;
@@ -54,7 +55,7 @@ public class Snake
     
     public boolean isAlive()
     {
-        return alive;
+        return status == SnakeStatus.ALIVE;
     }
     
     public void move()
@@ -93,7 +94,7 @@ public class Snake
         {
             System.out.println("The snake has bitten itself.");
             System.out.println("Score: " + score);
-            alive = false;
+            status = SnakeStatus.DEAD;
             return;
         }
         
@@ -130,6 +131,15 @@ public class Snake
     public int getScore()
     {
     	return score;
+    }
+    
+    public void drawFinalScreen(Graphics g)
+    {
+    	g.setFont(new Font("Sans", Font.PLAIN, 20));
+    	g.drawString("Score: " + getScore(), 50, 412);
+    	g.drawString("Press ENTER to restart", 50, 450);
+    	
+    	
     }
 
     public void keyPressed(KeyEvent e)
