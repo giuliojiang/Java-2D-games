@@ -17,15 +17,24 @@ public class Snake
     private boolean alive;
     private boolean eatingApple;
     private Grid cells;
+    private Board board;
+    private int score;
 
-    public Snake(Grid cells)
+    public Snake(Grid cells, Board board)
     {
-        this.direction = Direction.UP;
+        initSnake(cells, board);
+    }
+    
+    public void initSnake(Grid cells, Board board)
+    {
+    	this.direction = Direction.UP;
         this.newDirection = direction;
         this.snake = new LinkedList<CellCoordinate>();
         this.alive = true;
         this.eatingApple = false;
         this.cells = cells;
+        this.board = board;
+        this.score = 0;
         
         // initialize first snake 2 dots
         snake.addFirst(new CellCoordinate(10,10));
@@ -50,6 +59,8 @@ public class Snake
     
     public void move()
     {
+    	score--;
+    	
         // update new direction
         direction = newDirection;
         
@@ -81,6 +92,7 @@ public class Snake
         if (cells.getCellType(newHead) == CellType.SNAKE)
         {
             System.out.println("The snake has bitten itself.");
+            System.out.println("Score: " + score);
             alive = false;
             return;
         }
@@ -90,6 +102,7 @@ public class Snake
         if (cells.getCellType(newHead) == CellType.APPLE)
         {
             hasJustEaten = true;
+            score += 50;
         }
         
         // add new head position to queue and to grid
@@ -112,6 +125,11 @@ public class Snake
         {
             eatingApple = true;
         }
+    }
+    
+    public int getScore()
+    {
+    	return score;
     }
 
     public void keyPressed(KeyEvent e)
@@ -148,6 +166,17 @@ public class Snake
             {
                 newDirection = Direction.LEFT;
             }
+        }
+        
+        // restart the game
+        if (key == KeyEvent.VK_ENTER)
+        {
+        	if (!this.isAlive())
+        	{
+        		cells.initGrid();
+        		initSnake(cells, board);
+        		board.restartGame();
+        	}
         }
     }
 

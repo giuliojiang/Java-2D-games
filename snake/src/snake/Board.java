@@ -12,137 +12,177 @@ import java.util.Random;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class Board extends JPanel implements ActionListener
-{
+public class Board extends JPanel implements ActionListener {
 
-    private int cellSize;
-    private Grid cells;
-    private Snake snake;
-    private Timer timer;
-    private int DELAY = 180;
-    private boolean inGame;
-    private Random rnd;
+	private int cellSize;
+	private Grid cells;
+	private Snake snake;
+	private Menu menu;
+	private boolean inGame;
+	private boolean inMenu;
+	private Random rnd;
+	TimerRunnable timer;
+	Thread timerThread;
 
-    public Board()
-    {
-        initBoard();
-    }
+	public Board() {
+		initBoard();
+	}
 
-    private void initBoard()
-    {
-        // calculate cell size
-        cellSize = CellImages.getInstance().getImage(CellType.EMPTY)
-                .getWidth(null);
+	private void initBoard() {
+		// calculate cell size
+		cellSize = CellImages.getInstance().getImage(CellType.EMPTY)
+				.getWidth(null);
 
-        // initialize cells
-        cells = new Grid();
+		// initialize cells
+		cells = new Grid();
 
-        // initialize snake
-        snake = new Snake(cells);
+		// initialize snake
+		snake = new Snake(cells, this);
 
-        // add key listener
-        addKeyListener(new TAdapter());
+		// add key listener
+		addKeyListener(new TAdapter());
 
-        setFocusable(true);
-        setBackground(Color.WHITE);
-        setPreferredSize(new Dimension(cellSize * Grid.GRID_WIDTH, cellSize
-                * Grid.GRID_HEIGHT));
+		setFocusable(true);
+		setBackground(Color.WHITE);
+		setPreferredSize(new Dimension(cellSize * Grid.GRID_WIDTH, cellSize
+				* Grid.GRID_HEIGHT));
 
-        inGame = true;
+		inGame = false;
+		inMenu = true;
 
-        // initialize random
-        rnd = new Random();
+		// initialize random
+		rnd = new Random();
+		
+		// initialize menu
+		menu = new Menu(this);
 
-        // start timer
-        Thread timerThread = new Thread(new TimerRunnable(this));
-        timerThread.start();
-    }
+		// start timer
+		timer = new TimerRunnable(this);
+		timerThread = new Thread(new TimerRunnable(this));
+		timerThread.start();
+	}
 
-    @Override
-    public void actionPerformed(ActionEvent e)
-    {
-        // check alive
-        if (!snake.isAlive())
-        {
-            inGame = false;
-        }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (!inMenu) {
 
-        // move snake
-        if (inGame)
-        {
-            snake.move();
-            addApple();
-        }
+			// check alive
+			if (!snake.isAlive()) {
+				inGame = false;
+			}
 
-        // draw
-        repaint();
-    }
+			// move snake
+			if (inGame) {
+				snake.move();
+				addApple();
+			}
 
-    private void addApple()
-    {
-        if (rnd.nextInt(12) == 0)
-        {
-            addNewApple();
-        }
-    }
+			// draw
+			repaint();
+		} else
+		{
+			repaint();
+		}
+	}
 
-    private void addNewApple()
-    {
-        if (cells.countApples() > 2)
-        {
-            return;
-        }
+	private void addApple() {
+		if (rnd.nextInt(12) == 0) {
+			addNewApple();
+		}
+	}
 
-        int x = rnd.nextInt(Grid.GRID_WIDTH);
-        int y = rnd.nextInt(Grid.GRID_HEIGHT);
+	private void addNewApple() {
+		if (cells.countApples() > 2) {
+			return;
+		}
 
-        if (cells.getCellType(x, y) == CellType.SNAKE)
-        {
-            return;
-        }
+		int x = rnd.nextInt(Grid.GRID_WIDTH);
+		int y = rnd.nextInt(Grid.GRID_HEIGHT);
 
-        cells.setCell(x, y, CellType.APPLE);
-    }
+		if (cells.getCellType(x, y) == CellType.SNAKE) {
+			return;
+		}
 
-    @Override
-    public void paintComponent(Graphics g)
-    {
-        super.paintComponent(g);
+		cells.setCell(x, y, CellType.APPLE);
+	}
 
-        for (int i = 0; i < Grid.GRID_WIDTH; i++)
-        {
-            for (int j = 0; j < Grid.GRID_HEIGHT; j++)
-            {
-                CellCoordinate coord = new CellCoordinate(i, j);
-                Cell c = cells.getCell(coord);
-                g.drawImage(c.getImage(), coord.getXGlobal(),
-                        coord.getYGlobal(), this);
-            }
-        }
-        if (!inGame)
-        {
-            g.drawImage(CellImages.getInstance().getGameOver(), 0, 0, this);
-        }
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 
-    }
+		if (!inMenu) {
 
-    private class TAdapter extends KeyAdapter
-    {
+			for (int i = 0; i < Grid.GRID_WIDTH; i++) {
+				for (int j = 0; j < Grid.GRID_HEIGHT; j++) {
+					CellCoordinate coord = new CellCoordinate(i, j);
+					Cell c = cells.getCell(coord);
+					g.drawImage(c.getImage(), coord.getXGlobal(),
+							coord.getYGlobal(), this);
+				}
+			}
+			
+			paintScore(g);
+			
+			if (!inGame) {
+				g.drawImage(CellImages.getInstance().getGameOver(), 0, 0, this);
+			}
+		} else
+		{
+			menu.drawMenu(g);
+		}
 
-        @Override
-        public void keyPressed(KeyEvent e)
-        {
-            snake.keyPressed(e);
+	}
+	
+	private void paintScore(Graphics g)
+	{
+		g.drawString("Score: " + snake.getScore(), 20, 20);
+	}
 
-        }
+	public void startGame(long delay) {
+		timerThread.interrupt();
+		try {
+			timerThread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		timer.setDelay(delay);
+		inMenu = false;
+		inGame = true;
+		timerThread = new Thread(timer);
+		timerThread.start();
+	}
+	
+	public void restartGame()
+	{
+		timerThread.interrupt();
+		try {
+			timerThread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		inMenu = false;
+		inGame = true;
+		timerThread = new Thread(timer);
+		timerThread.start();
+	}
 
-        @Override
-        public void keyReleased(KeyEvent e)
-        {
-            // null
+	private class TAdapter extends KeyAdapter {
 
-        }
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if (inMenu) {
+				menu.keyPressed(e);
+			} else {
+				snake.keyPressed(e);
+			}
+		}
 
-    }
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// null
+
+		}
+
+	}
 
 }

@@ -10,7 +10,12 @@ public class Grid
     
     public Grid()
     {
-        cells = new Cell[GRID_WIDTH][GRID_HEIGHT];
+        initGrid();
+    }
+    
+    public void initGrid()
+    {
+    	cells = new Cell[GRID_WIDTH][GRID_HEIGHT];
         for (int i = 0; i < GRID_WIDTH; i++)
         {
             for (int j = 0; j < GRID_HEIGHT; j++)
