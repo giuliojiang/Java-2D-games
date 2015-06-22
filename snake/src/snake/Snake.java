@@ -11,6 +11,7 @@ public class Snake
 {
 
     private Direction direction;
+    private Direction newDirection;
     // queue to store snake points. add to the beginning, remove from the end
     private Deque<CellCoordinate> snake;
     private boolean alive;
@@ -20,6 +21,7 @@ public class Snake
     public Snake(Grid cells)
     {
         this.direction = Direction.UP;
+        this.newDirection = direction;
         this.snake = new LinkedList<CellCoordinate>();
         this.alive = true;
         this.eatingApple = false;
@@ -48,6 +50,9 @@ public class Snake
     
     public void move()
     {
+        // update new direction
+        direction = newDirection;
+        
         // get old head
         CellCoordinate head = snake.getFirst();
         int x = head.getX();
@@ -117,7 +122,7 @@ public class Snake
         {
             if (direction != Direction.DOWN)
             {
-                direction = Direction.UP;
+                newDirection = Direction.UP;
             }
         }
 
@@ -125,7 +130,7 @@ public class Snake
         {
             if (direction != Direction.LEFT)
             {
-                direction = Direction.RIGHT;
+                newDirection = Direction.RIGHT;
             }
         }
 
@@ -133,7 +138,7 @@ public class Snake
         {
             if (direction != Direction.UP)
             {
-                direction = Direction.DOWN;
+                newDirection = Direction.DOWN;
             }
         }
 
@@ -141,7 +146,7 @@ public class Snake
         {
             if (direction != Direction.RIGHT)
             {
-                direction = Direction.LEFT;
+                newDirection = Direction.LEFT;
             }
         }
     }

@@ -6,7 +6,7 @@ public class TimerRunnable implements Runnable
     private long start;
     private long next;
     private Board board;
-    private long DELAY = 100;
+    private long DELAY = 250;
     
     public TimerRunnable(Board board)
     {

@@ -52,4 +52,20 @@ public class Grid
         getCell(c).setType(t);
     }
     
+    public int countApples()
+    {
+        int n = 0;
+        for (int i = 0; i < GRID_WIDTH; i++)
+        {
+            for (int j = 0; j < GRID_HEIGHT; j++)
+            {
+                if (cells[i][j].getType() == CellType.APPLE)
+                {
+                    n++;
+                }
+            }
+        }
+        return n;
+    }
+    
 }

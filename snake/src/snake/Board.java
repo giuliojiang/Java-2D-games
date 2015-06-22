@@ -88,6 +88,11 @@ public class Board extends JPanel implements ActionListener
 
     private void addNewApple()
     {
+        if (cells.countApples() > 2)
+        {
+            return;
+        }
+
         int x = rnd.nextInt(Grid.GRID_WIDTH);
         int y = rnd.nextInt(Grid.GRID_HEIGHT);
 
