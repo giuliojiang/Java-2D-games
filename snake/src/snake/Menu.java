@@ -154,22 +154,22 @@ public class Menu
     {
         if (speed == 1)
         {
-            return 200;
+            return 213;
         }
 
         if (speed == 2)
         {
-            return 125;
+            return 127;
         }
 
         if (speed == 3)
         {
-            return 80;
+            return 77;
         }
 
         if (speed == 4)
         {
-            return 30;
+            return 31;
         }
 
         return 200;
